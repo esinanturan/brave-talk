@@ -5,6 +5,7 @@ import { renderConferencePage } from "../jitsi/conference-page";
 import { jitsiOptions } from "../jitsi/options";
 import {
   breakoutRoomsUpdatedHandler,
+  buttonHandler,
   dataChannelOpenedHandler,
   displayNameChangeHandler,
   endpointTextMessageReceivedHandler,
@@ -75,6 +76,7 @@ export const InCall = ({
         videoConferenceJoinedHandler(transcriptManager.current),
         transcriptionChunkReceivedHandler(transcriptManager.current),
         transcribingStatusChangedHandler(transcriptManager.current),
+        buttonHandler,
       ];
 
       transcriptManager.current.roomName = roomName;
