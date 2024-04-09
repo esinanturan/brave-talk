@@ -151,6 +151,7 @@ export const jitsiOptions = (
 
   Object.entries(features).forEach(([feature, state]) => {
     if (state === "true") {
+      options.configOverwrite.toolbarButtons.push(feature);
       if (feature === "recording") {
         options.configOverwrite.conferenceInfo.autoHide.push(
           "highlight-moment",
