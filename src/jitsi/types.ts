@@ -85,17 +85,13 @@ export type JitsiOptions = {
   interfaceConfigOverwrite: {
     APP_NAME: string;
     DEFAULT_BACKGROUND: string;
-    DEFAULT_LOCAL_DISPLAY_NAME: string;
-    DEFAULT_LOGO_URL: string;
-    DEFAULT_REMOTE_DISPLAY_NAME: string;
+    DISABLE_DOMINANT_SPEAKER_INDICATOR: boolean;
     DISABLE_TRANSCRIPTION_SUBTITLES: boolean;
     JITSI_WATERMARK_LINK: string;
-    NATIVE_APP_NAME: string;
     PROVIDER_NAME: string;
     SHARING_FEATURES: string[];
     SHOW_CHROME_EXTENSION_BANNER: boolean;
     SUPPORT_URL: string;
-    TOOLBAR_BUTTONS: string[];
   };
   onload: () => void;
 };

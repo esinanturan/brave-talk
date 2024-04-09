@@ -129,57 +129,15 @@ export const jitsiOptions = (
     interfaceConfigOverwrite: {
       APP_NAME: "Brave Talk",
       DEFAULT_BACKGROUND: "#3B3E4F",
-      DEFAULT_LOCAL_DISPLAY_NAME: "me",
-      // a no-op
-      DEFAULT_LOGO_URL: "https://talk.brave.com/images/brave_logo_dark.svg",
-      DEFAULT_REMOTE_DISPLAY_NAME: "User",
+      DISABLE_DOMINANT_SPEAKER_INDICATOR: true,
       DISABLE_TRANSCRIPTION_SUBTITLES: false,
-
-      //          DISABLE_FOCUS_INDICATOR: true,
-      //          DISABLE_DOMINANT_SPEAKER_INDICATOR: true,
-
       // a no-op
       JITSI_WATERMARK_LINK: "https://brave.com",
-      NATIVE_APP_NAME: "Brave Talk",
       PROVIDER_NAME: "Brave",
-      //          SET_FILMSTRIP_ENABLED: false,
       // remove 'dial-in'
       SHARING_FEATURES: ["email", "url", "embed"],
       SHOW_CHROME_EXTENSION_BANNER: false,
       SUPPORT_URL: "https://community.brave.com/",
-      TOOLBAR_BUTTONS: [
-        "microphone",
-        "camera",
-        "desktop",
-        "embedmeeting",
-        "fullscreen",
-        "fodeviceselection",
-        "hangup",
-        "profile",
-        "chat",
-        // must be enabled in JWT context.features object
-        // "recording",
-        // "livestreaming",
-        "etherpad",
-        "sharedvideo",
-        "shareaudio",
-        "settings",
-        "raisehand",
-        "videoquality",
-        "filmstrip",
-        "participants-pane",
-        "feedback",
-        "stats",
-        "shortcuts",
-        "tileview",
-        "select-background",
-        "help",
-        "mute-everyone",
-        "mute-video-everyone",
-        "security",
-        "toggle-camera",
-        "invite",
-      ],
     },
 
     onload: () => {
@@ -193,7 +151,6 @@ export const jitsiOptions = (
 
   Object.entries(features).forEach(([feature, state]) => {
     if (state === "true") {
-      options.interfaceConfigOverwrite.TOOLBAR_BUTTONS.push(feature);
       if (feature === "recording") {
         options.configOverwrite.conferenceInfo.autoHide.push(
           "highlight-moment",
