@@ -32,6 +32,7 @@ interface Props {
   setJwt: (jwt: string) => void;
   setRoomName: (roomName: string) => void;
   setJitsiContext: (context: JitsiContext) => void;
+  onRouterStatePushed: () => void;
 }
 
 export const WelcomeScreen = ({
@@ -48,6 +49,7 @@ export const WelcomeScreen = ({
   setJwt,
   setRoomName,
   setJitsiContext,
+  onRouterStatePushed,
 }: Props) => {
   const subscribed = useSubscribedStatus();
   const { t } = useTranslation();
@@ -204,7 +206,7 @@ export const WelcomeScreen = ({
 
         <LeoPromo />
 
-        <Recordings />
+        <Recordings onRouterStatePushed={onRouterStatePushed} />
 
         {!hasInitialRoomName && <SubscriptionCTA subscribed={subscribed} />}
         <Web3CTA onClick={onClickWeb3CTA} isSubscribed={subscribed === "yes"} />

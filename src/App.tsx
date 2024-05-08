@@ -12,6 +12,8 @@ import { useParams } from "./hooks/use-params";
 import { reportAction } from "./lib";
 
 import "./i18n/i18next";
+import { useEffect } from "react";
+import { MeetingTranscriptDisplay } from "./components/Transcript";
 
 const styles = {
   container: css({
@@ -53,19 +55,49 @@ export const App = () => {
     window.close();
   }
 
+  const initialiseRouteTranscript = () => {
+    const match = window.location.pathname.match(
+      /^\/transcript-([a-z0-9]{50})$/,
+    );
+    if (match) {
+      return match[1];
+    }
+  };
+  const [routeTranscript, setRouteTranscript] = React.useState<
+    string | undefined
+  >(initialiseRouteTranscript);
+  const onRouterStatePushed = () => {
+    setRouteTranscript(initialiseRouteTranscript());
+  };
+  useEffect(() => {
+    const onPopstate = () => {
+      onRouterStatePushed();
+    };
+    window.addEventListener("popstate", onPopstate);
+    return () => {
+      window.removeEventListener("popstate", onPopstate);
+    };
+  });
+
   return (
     <React.Fragment>
       <GlobalStyles />
       <div css={styles.container}>
-        <InCall
-          roomName={roomName ?? ""}
-          jwt={jwt ?? ""}
-          isMobile={browserProps.isMobile}
-          isCallReady={isCallReady}
-          isWeb3Call={isWeb3Call}
-          jitsiContext={jitsiContext}
-        />
-        {!isCallReady &&
+        {routeTranscript && (
+          <MeetingTranscriptDisplay transcriptId={routeTranscript} />
+        )}
+        {!routeTranscript && isCallReady && (
+          <InCall
+            roomName={roomName ?? ""}
+            jwt={jwt ?? ""}
+            isMobile={browserProps.isMobile}
+            isCallReady={isCallReady}
+            isWeb3Call={isWeb3Call}
+            jitsiContext={jitsiContext}
+          />
+        )}
+        {!routeTranscript &&
+          !isCallReady &&
           (isWeb3Call && hasInitialRoom ? (
             <JoinWeb3Call
               roomName={roomName as string}
@@ -90,6 +122,7 @@ export const App = () => {
               setRoomName={setRoomName}
               jitsiContext={jitsiContext}
               setJitsiContext={setJitsiContext}
+              onRouterStatePushed={onRouterStatePushed}
             />
           ))}
       </div>
