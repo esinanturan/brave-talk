@@ -23,7 +23,7 @@ const RecordingDisplay = ({
 }: DisplayProps) => {
   const recordingDate = new Date(r.createdAt * 1000);
 
-  const getTranscriptOnClick = (transcriptUrl: string) => {
+  const getTranscriptOnClick = (transcriptUrl: string, startDateTime: Date) => {
     const match = transcriptUrl.match(/\/([a-z0-9]{50})\/?$/);
     if (!match) {
       return;
@@ -34,7 +34,11 @@ const RecordingDisplay = ({
       e.preventDefault();
       e.stopPropagation();
       e.nativeEvent.stopImmediatePropagation();
-      window.history.pushState(null, "", `/transcript-${transcriptId}`);
+      window.history.pushState(
+        { startDateTime: startDateTime.getTime() },
+        "",
+        `/transcript-${transcriptId}`,
+      );
       onRouterStatePushed();
       return false;
     };
@@ -84,7 +88,7 @@ const RecordingDisplay = ({
             css={{ textDecoration: "none", color: "inherit" }}
             target="_blank"
             rel="noreferrer"
-            onClick={getTranscriptOnClick(r.transcriptUrl)}
+            onClick={getTranscriptOnClick(r.transcriptUrl, recordingDate)}
           >
             <img
               src={TranscriptImage}

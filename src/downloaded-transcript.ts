@@ -14,7 +14,7 @@ export interface TranscriptionEvent {
 export interface DownloadedTranscript {
   url: string;
   events: TranscriptionEvent[];
-  startDateTime: string;
+  startDateTime: Date | undefined;
 }
 
 const ACTION_NAMES: Record<string, TranscriptAction> = {

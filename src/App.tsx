@@ -13,7 +13,6 @@ import { reportAction } from "./lib";
 
 import "./i18n/i18next";
 import { useEffect } from "react";
-import { MeetingTranscriptDisplay } from "./components/Transcript";
 
 const styles = {
   container: css({
@@ -70,9 +69,7 @@ export const App = () => {
     setRouteTranscript(initialiseRouteTranscript());
   };
   useEffect(() => {
-    const onPopstate = () => {
-      onRouterStatePushed();
-    };
+    const onPopstate = onRouterStatePushed;
     window.addEventListener("popstate", onPopstate);
     return () => {
       window.removeEventListener("popstate", onPopstate);
@@ -83,9 +80,6 @@ export const App = () => {
     <React.Fragment>
       <GlobalStyles />
       <div css={styles.container}>
-        {routeTranscript && (
-          <MeetingTranscriptDisplay transcriptId={routeTranscript} />
-        )}
         {!routeTranscript && isCallReady && (
           <InCall
             roomName={roomName ?? ""}
@@ -96,8 +90,7 @@ export const App = () => {
             jitsiContext={jitsiContext}
           />
         )}
-        {!routeTranscript &&
-          !isCallReady &&
+        {!isCallReady &&
           (isWeb3Call && hasInitialRoom ? (
             <JoinWeb3Call
               roomName={roomName as string}
@@ -123,6 +116,7 @@ export const App = () => {
               jitsiContext={jitsiContext}
               setJitsiContext={setJitsiContext}
               onRouterStatePushed={onRouterStatePushed}
+              displayTranscriptId={routeTranscript}
             />
           ))}
       </div>

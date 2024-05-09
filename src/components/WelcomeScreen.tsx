@@ -17,6 +17,7 @@ import { JitsiContext } from "../jitsi/types";
 import { resolveService } from "../services";
 import { Text } from "./Text";
 import LeoPromo from "./LeoPromo";
+import { MeetingTranscriptDisplay } from "./Transcript";
 
 interface Props {
   onStartCall: DispatchWithoutAction;
@@ -33,6 +34,7 @@ interface Props {
   setRoomName: (roomName: string) => void;
   setJitsiContext: (context: JitsiContext) => void;
   onRouterStatePushed: () => void;
+  displayTranscriptId: string | undefined;
 }
 
 export const WelcomeScreen = ({
@@ -50,6 +52,7 @@ export const WelcomeScreen = ({
   setRoomName,
   setJitsiContext,
   onRouterStatePushed,
+  displayTranscriptId,
 }: Props) => {
   const subscribed = useSubscribedStatus();
   const { t } = useTranslation();
@@ -76,6 +79,10 @@ export const WelcomeScreen = ({
     return;
   };
   const Body = () => {
+    if (displayTranscriptId) {
+      return <MeetingTranscriptDisplay transcriptId={displayTranscriptId} />;
+    }
+
     if (!browser.supportsWebRTC) {
       return (
         <SectionWithLogo
