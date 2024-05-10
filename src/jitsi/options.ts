@@ -68,6 +68,7 @@ export const jitsiOptions = (
       localSubject: "Brave Talk",
       prejoinPageEnabled: true,
       recordings: {
+        recordTranscription: false,
         recordAudioAndVideo: false,
       },
       resolution: isMobile ? 360 : undefined,

@@ -67,6 +67,7 @@ export type JitsiOptions = {
     localSubject: string;
     prejoinPageEnabled: boolean;
     recordings: {
+      recordTranscription: boolean;
       recordAudioAndVideo: boolean;
     };
     resolution?: number;
